@@ -8,6 +8,15 @@ import User from "../models/user.model";
 import Thread from "../models/thread.model";
 import Community from "../models/community.model";
 
+
+interface Params {
+  text: string;
+  author: string;
+  communityId: string | null;
+  path: string;
+}
+
+
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
 
@@ -48,19 +57,14 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   return { posts, isNext };
 }
 
-interface Params {
-  text: string;
-  author: string;
-  communityId: string | null;
-  path: string;
-}
+
 
 export async function createThread({
   text,
   author,
   communityId,
   path,
-}: Params) {
+   }: Params) {
   try {
     connectToDB();
 
@@ -93,7 +97,7 @@ export async function createThread({
   }
 }
 
-async function fetchAllChildThreads(threadId: string): Promise<any[]> {
+ async function fetchAllChildThreads(threadId: string): Promise<any[]> {
   const childThreads = await Thread.find({ parentId: threadId });
 
   const descendantThreads = [];
@@ -104,6 +108,19 @@ async function fetchAllChildThreads(threadId: string): Promise<any[]> {
 
   return descendantThreads;
 }
+
+// async function fetchAllChildThreads(threadId: string): Promise<any[]> {
+//   const childThreads = await Thread.find({ parentId: threadId });
+
+//   const descendantThreads = [];
+//   for (const childThread of childThreads) {
+//     const descendants = await fetchAllChildThreads(childThread._id);
+//     descendantThreads.push(childThread, ...descendants);
+//   }
+
+//   return descendantThreads;
+// }
+
 
 export async function deleteThread(id: string, path: string): Promise<void> {
   try {
@@ -205,11 +222,11 @@ export async function fetchThreadById(threadId: string) {
 }
 
 export async function addCommentToThread(
-  threadId: string,
-  commentText: string,
-  userId: string,
-  path: string
-) {
+    threadId: string,
+    commentText: string,
+    userId: string,
+     path: string
+   ) {
   connectToDB();
 
   try {

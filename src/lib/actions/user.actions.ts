@@ -20,7 +20,7 @@ export async function fetchUser(userId: string) {
   } catch (error: any) {
     console.log(error);
     
-    // throw new Error(`Failed to fetch user: ${error.message}`);
+    throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
 
