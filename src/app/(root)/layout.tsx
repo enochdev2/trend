@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CommunityHub",
-  description: "CommunityHub: A Collaborative Community Hu",
+  description: "CommunityHub: A Collaborative Community Hub",
 };
 
 export default function RootLayout({
